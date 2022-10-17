@@ -9,14 +9,14 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class ChatController {
-    @MessageMapping
+    @MessageMapping("/topic.newUser")
     @SendTo("/topic/public")
     public ChatMessages newUser(@Payload ChatMessages chatMessages, SimpMessageHeaderAccessor accessor){
         accessor.getSessionAttributes().put("username",chatMessages.getSender());
         return chatMessages;
     }
 
-    @MessageMapping("/chat.send")
+    @MessageMapping("/chat.sendMessages")
     @SendTo("/topic/public")
     public ChatMessages sendMessages(@Payload ChatMessages chatMessages){
         return chatMessages;
