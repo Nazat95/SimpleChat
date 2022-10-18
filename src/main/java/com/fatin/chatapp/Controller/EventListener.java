@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+/**
+ * Optional. Shows connect/disconnect on the console
+ */
 @Component
 public class EventListener {
     private static final Logger logger = LoggerFactory.getLogger(EventListener.class);

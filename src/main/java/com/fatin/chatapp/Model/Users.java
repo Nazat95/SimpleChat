@@ -3,6 +3,8 @@ package com.fatin.chatapp.Model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -29,6 +31,6 @@ public class Users {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
-    private Set<HostUsers> hostUsers;
+    private List<HostUsers> hostUsers = new ArrayList<>();
 
 }
