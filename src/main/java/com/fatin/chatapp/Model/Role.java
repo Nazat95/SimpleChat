@@ -1,9 +1,6 @@
 package com.fatin.chatapp.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,18 +10,23 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "hostUsers")
-public class HostUsers {
+public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
+    @Column(nullable = false, unique = true)
+    private String name;
     @ManyToMany (mappedBy = "hostUsers")
     private List <Users> users = new ArrayList<>();
 
-    public HostUsers(String username, List<Users> users) {
-        this.username = username;
+    public Role(String name, List<Users> users) {
+        this.name = name;
         this.users = users;
+    }
+    public Role (String name){
+        this.name = name;
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 /**
- * Optional. Shows connect/disconnect on the console
+ * Event listener for connecting and disconnecting
  */
 @Component
 public class EventListener {
@@ -34,8 +34,7 @@ public class EventListener {
             ChatMessages chatMessages = new ChatMessages();
             chatMessages.setMessageType(ChatMessages.MessageType.LEAVE);
             chatMessages.setSender(username);
-
-            sendingOperations.convertAndSend("/topic/public", chatMessages);
+            sendingOperations.convertAndSend("/session/public", chatMessages);
 
         }
 

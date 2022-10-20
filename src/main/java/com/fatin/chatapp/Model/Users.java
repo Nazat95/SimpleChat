@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,14 +15,24 @@ import java.util.Set;
 @Table
 public class Users {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column (nullable = false)
     private String username;
-    @Column(nullable = false)
+    @Column (nullable = false)
+    private String name;
+    @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
     private String password;
+
+    public Users(String username, String name, String email, String password, List<Role> hostUsers) {
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.hostUsers = hostUsers;
+    }
 
     @ManyToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -31,6 +40,6 @@ public class Users {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
-    private List<HostUsers> hostUsers = new ArrayList<>();
+    private List<Role> hostUsers = new ArrayList<>();
 
 }

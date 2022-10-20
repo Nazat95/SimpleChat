@@ -1,8 +1,8 @@
 'use strict';
 
-var usernamePage = document.querySelector('#username-page');
-var chatPage = document.querySelector('#chat-page');
-var usernameForm = document.querySelector('#usernameForm');
+var usernamePage = document.querySelector('#nickname-page');
+var chatPage = document.querySelector('#chat-area');
+var usernameForm = document.querySelector('#nicknameForm');
 var messageForm = document.querySelector('#messageForm');
 var messageInput = document.querySelector('#message');
 var messageArea = document.querySelector('#messageArea');
@@ -34,7 +34,7 @@ function connect(event) {
 
 function onConnected() {
     // Subscribe to the Public Topic
-    stompClient.subscribe('/topic/public', onMessageReceived);
+    stompClient.subscribe('/session/public', onMessageReceived);
 
     // Tell your username to the server
     stompClient.send("/app/chat.newUser",
@@ -47,7 +47,7 @@ function onConnected() {
 
 
 function onError(error) {
-    connectingElement.textContent = 'Could not connect to the server';
+    connectingElement.textContent = 'Connection failed';
     connectingElement.style.color = 'red';
 }
 
@@ -76,10 +76,10 @@ function onMessageReceived(payload) {
 
     if(message.type === 'JOIN') {
         messageElement.classList.add('event-message');
-        message.content = message.sender + ' joined!';
+        message.content = message.sender + ' welcome!';
     } else if (message.type === 'LEAVE') {
         messageElement.classList.add('event-message');
-        message.content = message.sender + ' left!';
+        message.content = message.sender + ' left';
     } else {
         messageElement.classList.add('chat-message');
 
@@ -113,8 +113,8 @@ function getAvatarColor(messageSender) {
         hash = 31 * hash + messageSender.charCodeAt(i);
     }
 
-    var index = Math.abs(hash % colors.length);
-    return colors[index];
+    var i = Math.abs(hash % colors.length);
+    return colors[i];
 }
 
 usernameForm.addEventListener('submit', connect, true)
